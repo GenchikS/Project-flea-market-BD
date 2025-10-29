@@ -45,7 +45,12 @@ export const startServer = () => {
   app.get(`/user/:userId`, async (req, res) => {
     const {userId} = req.params;
     console.log('userId1', userId);
-     const userById = await getUserById(userId);
+    const userById = await getUserById(userId);
+    if (!userById) {
+      res.status(404).json({
+        message: `Not found user`
+      })
+    }
     res.status(200).json({
        data: userById,
      });
