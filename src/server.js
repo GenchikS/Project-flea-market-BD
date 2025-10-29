@@ -3,7 +3,7 @@ import pino from 'pino-http';
 import cors from 'cors';
 import express from 'express';
 import { getEnvVar } from './utils/getEnvVar.js';
-import { getAllUsers } from './services/users.js';
+import { getAllUsers, getUserById } from './services/users.js';
 
 // видаляємо імпорти, бо були перенесені
 // import dotenv from 'dotenv';
@@ -33,19 +33,24 @@ export const startServer = () => {
       }),
     );
 
-    // app.get('/', (req, res) => {
-    //   res.json({
-    //     message: 'Get',
-    //   });
-    // });
-
-  app.get(`/users`, async (req, res) => {
+   app.get(`/users`, async (req, res) => {
     const usersAll = await getAllUsers();
-    console.log('usersAll', usersAll);
+    // console.log('usersAll', usersAll);
     res.status(200).json({
       data: usersAll
     });
-  });
+   });
+
+  // 2.2.13 Створюємо маршрут user:ById
+  app.get(`/user/:userId`, async (req, res) => {
+    const {userId} = req.params;
+    console.log('userId1', userId);
+     const userById = await getUserById(userId);
+    res.status(200).json({
+       data: userById,
+     });
+   });
+
 
     app.use('', (req, res, next) => {
       res.status(404).json({
@@ -76,4 +81,10 @@ export const startServer = () => {
 // 2.2.9 Наступне створення файлу підключення до MongoDB db/initMongoDB.js
 
 // 2.2.12 Попереднє в файлі services/users.js
-// 2.2. Наступне в файлі server.js
+// 2.2.14 Наступне в файлі services/users.js
+
+// 2.2.14 Попереднє в файлі services/users.js
+// 2.2. Наступне в файлі services/users.js
+
+
+// останнє 2.2.15 service/user.js
