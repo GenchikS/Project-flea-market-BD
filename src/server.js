@@ -3,6 +3,7 @@ import pino from 'pino-http';
 import cors from 'cors';
 import express from 'express';
 import { getEnvVar } from './utils/getEnvVar.js';
+import { getAllUsers } from './services/users.js';
 
 // видаляємо імпорти, бо були перенесені
 // import dotenv from 'dotenv';
@@ -32,11 +33,19 @@ export const startServer = () => {
       }),
     );
 
-    app.get('/', (req, res) => {
-      res.json({
-        message: 'Get',
-      });
+    // app.get('/', (req, res) => {
+    //   res.json({
+    //     message: 'Get',
+    //   });
+    // });
+
+  app.get(`/users`, async (req, res) => {
+    const usersAll = await getAllUsers();
+    console.log('usersAll', usersAll);
+    res.status(200).json({
+      data: usersAll
     });
+  });
 
     app.use('', (req, res, next) => {
       res.status(404).json({
@@ -59,9 +68,12 @@ export const startServer = () => {
 // 2.1.15 Попереднє в файлі index.js
 // 2.2.2 Створення папок .env та .envexample
 // 2.2.3 Наступне в файлах .env та .envexample
-
 // 2.2.4 Встановлюємо npm install dotenv для зчитування змінних оточення
 
 // 2.2.7 Наступне створення утіліти utils/getEnvVar.js
 
 // 2.2.7 Попереднє створення утіліти utils/getEnvVar.js
+// 2.2.9 Наступне створення файлу підключення до MongoDB db/initMongoDB.js
+
+// 2.2.12 Попереднє в файлі services/users.js
+// 2.2. Наступне в файлі server.js

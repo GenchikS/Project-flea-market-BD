@@ -11,6 +11,7 @@
 // 1.1.9 Створення файлу gitignore
 // 2.1.1 npm install express
 
+import { initMongoDB } from "./db/initMongoDB.js";
 import { startServer } from "./server.js";
 
 // 2.1.9 npm install pino-http логування запитів (мідлвар)
@@ -73,6 +74,18 @@ import { startServer } from "./server.js";
 
 // 2.1.14 Перенесення коду в server.js
 // 2.1.15 Створення старту сервера
-startServer();
+// startServer();
+
+// 2.2.10 Видаляємо 2.1.15 та створюємо нову ф-цію запуски сервера
+const bootstrap = async () => {
+    await initMongoDB();
+    startServer();
+}
+
+bootstrap();
 
 // 2.2.1 Наступне в файлі server.js
+
+// 2.2.9 Попереднє в файлі db/initMongoDB.js
+
+// 2.2.11 Наступне в файлі db/models/user.js
