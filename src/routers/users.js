@@ -2,7 +2,7 @@
 
 import { Router } from "express";
 // import { getAllUsers, getUserById } from "../services/users.js";
-import { getUserControllersById, getUsersControllers } from "../controllers/users.js";
+import { createUserControllers, getUserControllersById, getUsersControllers } from "../controllers/users.js";
 import { ctrlWrapper } from "../utils/ctrlWrapper.js";
 
 const router = Router();
@@ -38,7 +38,10 @@ router.get(`/users`, ctrlWrapper(getUsersControllers));
 // 3.1.4.2 Видаляємо 3.1.1.1 та переносимо запит в src/controllers/users.js
 
 // 3.1.9.2 Добавляємо обгортку ctrlWrapper для перевірки на помилку в try..catch..
-router.get(`/user/:userId`, ctrlWrapper(getUserControllersById));
+router.get(`/users/:userId`, ctrlWrapper(getUserControllersById));
+
+// 3.2.3 Створюємо маршрут додавання користувача та контроллер
+router.post(`/users`, createUserControllers)
 
 
 export default router;
@@ -51,3 +54,6 @@ export default router;
 
 // 3.1.8 Попереднє в файлі src/utils/ctrlWrapper.js
 // 3.1.10 Наступне в файлі src/middlwares/errorHandler.js
+
+// 3.2.2 Попереднє в файлі src/services/users.js
+// 3.2.4 Наступне в файлі src/controllers/users.js

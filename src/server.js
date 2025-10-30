@@ -35,6 +35,9 @@ export const startServer = () => {
     }),
   );
 
+  // 3.2.1 Доналаштовуємо Express для робота з req.body
+  app.use(express.json());
+
   // 3.1.1.1 Переносимо  маршрути в src/routers/users.js
   //  app.get(`/users`, async (req, res) => {
   //   const usersAll = await getAllUsers();
@@ -62,7 +65,7 @@ export const startServer = () => {
   //     message: 'Route not found',
   //   });
   // });
-  // 3.1.12 Видаляємо маршрут app.use('', (req, res, next)) та змінюємо його на використання мідлвари notFoundRouter
+  // 3.1.13 Видаляємо маршрут app.use('', (req, res, next)) та змінюємо його на використання мідлвари notFoundRouter
   app.use(notFoundRouter);
 
   // 3.1.11.1 Видалення маршруту обробки помилок (створена для цього кастомна мідлвара errorHandler)
@@ -104,6 +107,9 @@ export const startServer = () => {
 // 3.1.12 Наступне в файлі src/middlwares/notFoundRouret.js
 
 // 3.1.12 Попереднє в файлі src/middlwares/notFoundRouret.js
-// 3.1. Наступне в файлі src/middlwares/notFoundRouret.js
+// 3.1.14 Наступне в файлі src/controllers/users.js
 
-// останнє 2.2.15 service/user.js
+// 3.1.15 Попереднє в файлі src/middlwares/errorHandler.js
+// 3.2.2 Наступне в файлі src/services/users.js
+
+// останнє 3.1.16 service/user.js
