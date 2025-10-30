@@ -1,13 +1,16 @@
 import HttpError from 'http-errors';
 // 3.1.10 Створення кастомної мідлвари для обробок помилок та видалемо її з server.js
 export const errorHandler = (err, req, res, next) => {
- // 3.1.15 Допрацюємо обробник помилок з 500 на 404
-    if (err instanceof HttpError) {
+  // 3.1.15 Допрацюємо обробник помилок з 500 на 404
+  // console.log(`err errorHandler`, err);
+  // console.log(`err.status errorHandler`, err.status);
+  // console.log(`err instanceof HttpError`, err instanceof HttpError);
+
+  if (err) {
         res.status(err.status).json({
             status: err.status,
             message: err.name,
-            data: err,
-        });
+          });
         return;
   }
 

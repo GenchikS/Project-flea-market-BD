@@ -1,7 +1,13 @@
 // 3.1.3 Створюємо контроллери запитів (забираємо з routers/users.js запити)
 
 import createHttpError from "http-errors";
-import { getAllUsers, getUserById, postCreateUser } from "../services/users.js";
+import {
+  deleteUserId,
+  getAllUsers,
+  getUserById,
+  patchUserId,
+  postCreateUser,
+} from '../services/users.js';
 
 // 3.1.3.1 Створюємо контроллер запиту
 export const getUsersControllers = async (req, res, next) => {
@@ -69,6 +75,38 @@ export const createUserControllers = async (req, res, next) => {
   });
 }
 
-
 // 3.2.3 Попереднє в файлі src/routers/users.js
 // 3.2.5 Наступне в файлі src/services/users.js
+
+// 3.2.5.1
+export const deleteUserControllers = async (req, res, next) => {
+  const { userId } = req.params;
+  // console.log(`userId deleteUserControllers`, userId);
+  const deleteUser = await deleteUserId(userId);
+  if (!deleteUser) {
+    next(createHttpError(404, `Not found user`));
+    return;
+  }
+  res.status(204).send()
+}
+
+// 3.2.6.2
+export const patchUserIdControllers = async (req, res, next) => {
+  const { userId } = req.params;
+  // console.log(`userId patchUserIdControllers`, userId);
+  // console.log(`req.body patchUserIdControllers`, req.body);
+  const patchUser = await patchUserId(userId, req.body, {
+    upsert: true,
+  });
+
+  if (!patchUser) {
+    next(createHttpError(404, `User not found!`));
+    return;
+  }
+
+  res.status(201).json({
+    status: 201,
+    message: `Successfully patched a user!`,
+    data: patchUser,
+  });
+};
