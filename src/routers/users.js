@@ -2,7 +2,13 @@
 
 import { Router } from "express";
 // import { getAllUsers, getUserById } from "../services/users.js";
-import { createUserControllers, getUserControllersById, getUsersControllers } from "../controllers/users.js";
+import {
+  createUserControllers,
+  deleteUserControllers,
+  getUserControllersById,
+  getUsersControllers,
+  patchUserIdControllers,
+} from '../controllers/users.js';
 import { ctrlWrapper } from "../utils/ctrlWrapper.js";
 
 const router = Router();
@@ -41,7 +47,13 @@ router.get(`/users`, ctrlWrapper(getUsersControllers));
 router.get(`/users/:userId`, ctrlWrapper(getUserControllersById));
 
 // 3.2.3 Створюємо маршрут додавання користувача та контроллер
-router.post(`/users`, createUserControllers)
+router.post(`/users`, ctrlWrapper(createUserControllers));
+
+// 3.2.5.1
+router.delete(`/users/:userId`, deleteUserControllers);
+
+// 3.2.6.2
+router.patch(`/users/:userId`, patchUserIdControllers)
 
 
 export default router;

@@ -31,11 +31,30 @@ export const postCreateUser = async (payload) => {
 // 3.2.1 Попереднє в файлі server.js
 // 3.2.3 Наступне в файлі src/routers/users.js
 
+// 3.2.5. Створюємо ф-цію видалення користувача
 export const deleteUserId = async (userId) => {
+  // console.log(`userId deleteUserId`, userId);
   const user = await UsersCollection.findByIdAndDelete({ _id: userId });
   return user;
 }
 
 // 3.2.4 Попереднє в файлі src/controllers/users.js
-// 3.2.5.2 Наступне в файлі src/routers/users.js, src/controllers/users.js
+// 3.2.5.1 Наступне в файлі src/routers/users.js, src/controllers/users.js
 
+// 3.2.6.1 Створюємо ф-цію редагування користувача
+export const patchUserId = async (userId, payload) => {
+  const userResutl = await UsersCollection.findOneAndUpdate(
+    { _id: userId },
+    payload,
+    {
+      new: true,
+    },
+  );
+
+  if (!userResutl) return null;
+
+  return userResutl;
+};
+
+// 3.2.5 Попереднє в файлі src/services/users.js
+// 3.2.6.2 Наступне в файлі src/routers/users.js, src/controllers/users.js
