@@ -30,6 +30,7 @@ export const getUsersControllers = async (req, res, next) => {
     status: 200,
     message: 'Successfully found users!',
     data: usersAll,
+    totalUsers: usersAll.length,
   });
 }
 
