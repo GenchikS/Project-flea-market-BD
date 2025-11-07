@@ -30,7 +30,7 @@ export const getUsersControllers = async (req, res, next) => {
   // console.log(`filter`, filter);
 
   const usersAll = await getAllUsers(filter);
-  // console.log('usersAll', usersAll);
+  console.log('usersAll', usersAll);
   res.json({
     status: 200,
     message: 'Successfully found users!',

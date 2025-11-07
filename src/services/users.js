@@ -2,22 +2,23 @@ import { UsersCollection } from '../db/models/user.js';
 
 // 2.2.12 Створення сервісу користувачів (пошук)
 export const getAllUsers = async (filter) => {
-  // console.log('filter', filter);
+  console.log('filter', filter);
   const { name, email } = filter;
 
+  console.log(`email`, email);
 
 
   const users = await UsersCollection.find();
 
   if (name) {
     const userName = await UsersCollection.find({ name: name });
-    // console.log('userName', userName);
+    console.log('userName', userName);
     return userName;
   }
 
   if (email) {
     const userEmail = await UsersCollection.find({ email: email });
-    // console.log('userEmail', userEmail);
+    console.log('userEmail', userEmail);
     return userEmail;
   }
   return users;
