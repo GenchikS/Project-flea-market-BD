@@ -20,7 +20,7 @@ export const getAllUsers = async (filter) => {
     // console.log('userEmail', userEmail);
     return userEmail;
   }
-  return
+  return users;
 
 };
 
