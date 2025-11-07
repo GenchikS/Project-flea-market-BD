@@ -31,11 +31,15 @@ export const getUsersControllers = async (req, res, next) => {
 
   const usersAll = await getAllUsers(filter);
   console.log('usersAll', usersAll);
-  res.json({
-    status: 200,
-    message: 'Successfully found users!',
-    data: usersAll,
-  });
+  if (!usersAll) {
+    console.log(`Not userById`);
+     throw createHttpError(404, `User not found!`);
+  }
+    res.json({
+      status: 200,
+      message: 'Successfully found users!',
+      data: usersAll,
+    });
 }
 
 // 3.1.14 Видалим next та встановимо npm install http-errors для зміни помилки з 500 на 404

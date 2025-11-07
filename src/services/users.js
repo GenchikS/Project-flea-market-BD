@@ -8,11 +8,11 @@ export const getAllUsers = async (filter) => {
   console.log(`email`, email);
 
 
-  const users = await UsersCollection.find();
+
 
   if (name) {
     const userName = await UsersCollection.find({ name: name });
-    console.log('userName', userName);
+    console.log('userName', userName.data);
     return userName;
   }
 
@@ -21,7 +21,10 @@ export const getAllUsers = async (filter) => {
     console.log('userEmail', userEmail);
     return userEmail;
   }
-  return users;
+
+  const users = await UsersCollection.find();
+
+  return filter && users;
 
 };
 
