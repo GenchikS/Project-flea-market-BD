@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 // 2.2.9 Створення файлу підключення до MongoDB
 // 2.2.9.1 інсталюємо бібліотеку npm install mongoose
 
-export const initMongoDB = async () => {
+export const initMongoDB = async (name) => {
   try {
     const user = getEnvVar('MONGODB_USER');
     const pwd = getEnvVar('MONGODB_PASSWORD');
@@ -11,7 +11,7 @@ export const initMongoDB = async () => {
     const db = getEnvVar('MONGODB_DB');
 
     await mongoose.connect(
-      `mongodb+srv://${user}:${pwd}@${url}/${db}?appName=Cluster0`,
+      `mongodb+srv://${user}:${pwd}@${url}/${db}?appName=Cluster0&name=${name}`,
     );
     console.log('Mongo connection successfully established!');
   } catch (error) {

@@ -5,9 +5,11 @@ import {
   deleteUserId,
   getAllUsers,
   getUserById,
+  // getUserByName,
   patchUserId,
   postCreateUser,
 } from '../services/users.js';
+import { parseFilterParams } from "../utils/parseFilterParams.js";
 
 // 3.1.3.1 Створюємо контроллер запиту
 export const getUsersControllers = async (req, res, next) => {
@@ -24,7 +26,10 @@ export const getUsersControllers = async (req, res, next) => {
   //     next(error);
   // }
   // 3.1.7 Щоб постійно не оготрати всі виклики в try..catch.. створюєсться обгортка перевірки в src/utils/ctrlWrapper.js. видаляємо 3.1.6
-  const usersAll = await getAllUsers();
+  const filter = parseFilterParams(req.query);
+  // console.log(`filter`, filter);
+
+  const usersAll = await getAllUsers(filter);
   // console.log('usersAll', usersAll);
   res.json({
     status: 200,

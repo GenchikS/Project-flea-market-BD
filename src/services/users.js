@@ -1,11 +1,28 @@
 import { UsersCollection } from '../db/models/user.js';
 
 // 2.2.12 Створення сервісу користувачів (пошук)
-export const getAllUsers = async () => {
-    // console.log('getAllUsers');
-    const users = await UsersCollection.find();
-return users;
-}
+export const getAllUsers = async (filter) => {
+  // console.log('filter', filter);
+  const { name, email } = filter;
+
+
+
+  const users = await UsersCollection.find();
+
+  if (name) {
+    const userName = await UsersCollection.find({ name: name });
+    // console.log('userName', userName);
+    return userName;
+  }
+
+  if (email) {
+    const userEmail = await UsersCollection.find({ email: email });
+    // console.log('userEmail', userEmail);
+    return userEmail;
+  }
+  return
+
+};
 
 // 2.2.14 Створення сервісу користувачів (пошук за id)
 export const getUserById = async (userId) => {
@@ -13,6 +30,7 @@ export const getUserById = async (userId) => {
   // console.log('user', user);
   return user;
 };
+
 
 // 2.2.11 Попереднє в файлі db/models/user.js
 // 2.2.13 Наступне в файлі server.js
