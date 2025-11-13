@@ -2,23 +2,23 @@ import { UsersCollection } from '../db/models/user.js';
 
 // 2.2.12 Створення сервісу користувачів (пошук)
 export const getAllUsers = async (filter) => {
-  console.log('filter', filter);
+  // console.log('filter', filter);
   const { name, email } = filter;
 
-  console.log(`email`, email);
+  // console.log(`email`, email);
 
 
 
 
   if (name) {
     const userName = await UsersCollection.find({ name: name });
-    console.log('userName', userName.data);
+    // console.log('userName', userName.data);
     return userName;
   }
 
   if (email) {
     const userEmail = await UsersCollection.find({ email: email });
-    console.log('userEmail', userEmail);
+    // console.log('userEmail', userEmail);
     return userEmail;
   }
 
@@ -46,7 +46,8 @@ export const getUserById = async (userId) => {
 // 3.2.2. Створюємо ф-цію додавання користувача
 export const postCreateUser = async (payload) => {
   // console.log(`createUser`, payload);
-  const user = await UsersCollection.create(payload)
+  const user = await UsersCollection.create(payload);
+
   return user;;
 };
 
@@ -65,6 +66,7 @@ export const deleteUserId = async (userId) => {
 
 // 3.2.6.1 Створюємо ф-цію редагування користувача
 export const patchUserId = async (userId, payload) => {
+  // console.log(`payload`, payload);
   const userResutl = await UsersCollection.findOneAndUpdate(
     { _id: userId },
     payload,

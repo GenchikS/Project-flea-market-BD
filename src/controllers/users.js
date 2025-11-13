@@ -30,9 +30,9 @@ export const getUsersControllers = async (req, res, next) => {
   // console.log(`filter`, filter);
 
   const usersAll = await getAllUsers(filter);
-  console.log('usersAll', usersAll);
+  // console.log('usersAll', usersAll);
   if (!usersAll) {
-    console.log(`Not userById`);
+    // console.log(`Not userById`);
      throw createHttpError(404, `User not found!`);
   }
     res.json({
@@ -48,7 +48,7 @@ export const getUserControllersById = async (req, res, next) => {
     const { userId } = req.params;
     const userById = await getUserById(userId);
   if (!userById) {
-    console.log(`Not userById`);
+    // console.log(`Not userById`);
               // res.status(404).json({
                   // message: `User not found`
               // });

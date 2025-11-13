@@ -51,6 +51,7 @@ router.get(`/users/:userId`, ctrlWrapper(getUserControllersById));
 router.post(`/users`, ctrlWrapper(createUserControllers));
 
 // 3.2.5.1
+
 router.delete(`/users/:userId`, deleteUserControllers);
 
 // 3.2.6.2

@@ -4,7 +4,7 @@ import cors from 'cors';
 import express from 'express';
 import { getEnvVar } from './utils/getEnvVar.js';
 // import { getAllUsers, getUserById } from './services/users.js';
-import usersRouter from './routers/users.js'
+import allRouter from './routers/indexRouters.js'
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundRouter } from './middlewares/notFoundRourer.js';
 
@@ -58,7 +58,8 @@ export const startServer = () => {
   //  });
 
   // 3.1.2 На заміну 3.1.1.1 строрюємо мідлвару та імпортуємо роути з src/routers/users.js
-  app.use(usersRouter);
+  app.use(allRouter);
+  // app.use(announcementsRouter);
 
   // app.use('', (req, res, next) => {
   //   res.status(404).json({
