@@ -25,7 +25,7 @@ const router = Router();
 // 3.1.4.1 Видаляємо 3.1.1.1 та переносимо запит в src/controllers/users.js
 
 // 3.1.9.1 Добавляємо обгортку ctrlWrapper для перевірки на помилку в try..catch..
-router.get(`/users`, ctrlWrapper(getUsersControllers));
+router.get(`/`, ctrlWrapper(getUsersControllers));
 router.get(`/user`, ctrlWrapper(getUsersControllers));
 
 //     router.get(`/user/:userId`, async (req, res) => {
