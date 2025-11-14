@@ -52,7 +52,7 @@ router.post(`/user/add`, ctrlWrapper(createUserControllers));
 
 // 3.2.5.1
 
-router.delete(`//user/delete/:userId`, deleteUserControllers);
+router.delete(`/user/delete/:userId`, deleteUserControllers);
 
 // 3.2.6.2
 router.patch(`/user/updata/:userId`, patchUserIdControllers);
