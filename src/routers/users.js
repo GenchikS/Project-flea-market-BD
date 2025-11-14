@@ -26,7 +26,7 @@ const router = Router();
 
 // 3.1.9.1 Добавляємо обгортку ctrlWrapper для перевірки на помилку в try..catch..
 router.get(`/users`, ctrlWrapper(getUsersControllers));
-// router.get(`/user`, ctrlWrapper(getUsersControllers));
+router.get(`/user`, ctrlWrapper(getUsersControllers));
 
 //     router.get(`/user/:userId`, async (req, res) => {
 //      const { userId } = req.params;
@@ -52,10 +52,10 @@ router.post(`/user/add`, ctrlWrapper(createUserControllers));
 
 // 3.2.5.1
 
-router.delete(`/users/:userId`, deleteUserControllers);
+router.delete(`//user/delete/:userId`, deleteUserControllers);
 
 // 3.2.6.2
-router.patch(`/users/:userId`, patchUserIdControllers)
+router.patch(`/user/updata/:userId`, patchUserIdControllers);
 
 
 export default router;
