@@ -5,3 +5,8 @@ export const getAllAnnouncements = async () => {
     console.log('getAllAnnouncements', announcementsAll);
     return announcementsAll;
 }
+
+export const postCreateAnnouncement = async (payload) => {
+    const announcement = await AnnouncementsCollection.create(payload);
+    return announcement
+}

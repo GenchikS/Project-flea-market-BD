@@ -48,7 +48,7 @@ router.get(`/user`, ctrlWrapper(getUsersControllers));
 router.get(`/users/:userId`, ctrlWrapper(getUserControllersById));
 
 // 3.2.3 Створюємо маршрут додавання користувача та контроллер
-router.post(`/users`, ctrlWrapper(createUserControllers));
+router.post(`/user/add`, ctrlWrapper(createUserControllers));
 
 // 3.2.5.1
 
