@@ -2,10 +2,10 @@ import { model, Schema } from 'mongoose';
 
 const announcementSchema = new Schema(
   {
-    // idUser: {
-    //   type: String,
-    //   required: true,
-    // },
+    idUser: {
+      type: String,
+      required: true,
+    },
     chapter: {
       type: String,
       required: true,
