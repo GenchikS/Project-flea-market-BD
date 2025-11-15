@@ -26,8 +26,6 @@ const router = Router();
 
 // 3.1.9.1 Добавляємо обгортку ctrlWrapper для перевірки на помилку в try..catch..
 router.get(`/users`, ctrlWrapper(getUsersControllers));
-router.get(`/user`, ctrlWrapper(getUsersControllers));
-
 //     router.get(`/user/:userId`, async (req, res) => {
 //      const { userId } = req.params;
 //     //  console.log('userId1', userId);
