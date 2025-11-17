@@ -58,7 +58,7 @@ export const postCreateUser = async (payload) => {
 export const deleteUserId = async (userId) => {
   // console.log(`userId deleteUserId`, userId);
   const user = await UsersCollection.findByIdAndDelete({ _id: userId });
-  return;
+  return user;
 }
 
 // 3.2.4 Попереднє в файлі src/controllers/users.js
