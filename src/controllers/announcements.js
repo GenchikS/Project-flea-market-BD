@@ -1,4 +1,4 @@
-import { getAllAnnouncements, postCreateAnnouncement } from "../services/announcements.js";
+import { getAllAnnouncements, patchAnnouncementId, postCreateAnnouncement } from "../services/announcements.js";
 import { postCreateUser } from "../services/users.js";
 
 
@@ -21,3 +21,25 @@ export const createAnnouncementControllers = async (req, res, next) => {
         data: response
     })
 }
+
+
+export const patchUpdateControllers = async (req, res, next) => {
+  const idAnnoun = req.params.announId;
+//   console.log(`idAnnoun`, idAnnoun);
+//   console.log(`userId patchUpdateControllers`, _id);
+//   console.log(`req.body patchUpdateControllers`, req.body);
+  const patchAnnouncement = await patchAnnouncementId(idAnnoun, req.body, {
+    upsert: true,
+  });
+
+  if (!patchAnnouncement) {
+    next(createHttpError(404, `User not found!`));
+    return;
+  }
+
+  res.status(201).json({
+    status: 201,
+    message: `Successfully patched a user!`,
+    data: patchAnnouncement,
+  });
+};
