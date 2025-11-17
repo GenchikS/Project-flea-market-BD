@@ -1,4 +1,4 @@
-import { getAllAnnouncements, patchAnnouncementId, postCreateAnnouncement } from "../services/announcements.js";
+import { deleteAnnouncementId, getAllAnnouncements, patchAnnouncementId, postCreateAnnouncement } from "../services/announcements.js";
 import { postCreateUser } from "../services/users.js";
 
 
@@ -43,3 +43,16 @@ export const patchUpdateControllers = async (req, res, next) => {
     data: patchAnnouncement,
   });
 };
+
+
+export const deleteAnnouncementControllers = async (req, res, next) => {
+  const { announId } = req.params;
+  console.log(`announId deleteUserControllers`, announId);
+  const deleteAnnouncement = await deleteAnnouncementId(announId);
+  if (!deleteAnnouncement) {
+    next(createHttpError(404, `Not found user`));
+    return;
+  }
+  res.status(204).send();
+}
+
