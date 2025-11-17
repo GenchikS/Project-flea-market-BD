@@ -1,5 +1,4 @@
 import { AnnouncementsCollection } from "../db/models/announcement.js";
-import { UsersCollection } from "../db/models/user.js";
 
 export const getAllAnnouncements = async () => {
     const announcementsAll = await AnnouncementsCollection.find();
@@ -29,9 +28,8 @@ export const patchAnnouncementId = async (idAnnoun, payload) => {
 };
 
 export const deleteAnnouncementId = async (announId) => {
-    // console.log(`announId deleteAnnonucementId`, announId);
     const id = announId;
-    console.log(`id deleteAnnonucementId`, id);
+    // console.log(`id deleteAnnonucementId`, id);
   const announcement = await AnnouncementsCollection.findByIdAndDelete(id);
-  return;
+  return announcement;
 };

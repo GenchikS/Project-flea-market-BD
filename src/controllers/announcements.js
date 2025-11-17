@@ -1,5 +1,4 @@
 import { deleteAnnouncementId, getAllAnnouncements, patchAnnouncementId, postCreateAnnouncement } from "../services/announcements.js";
-import { postCreateUser } from "../services/users.js";
 
 
 export const getAnnouncementsControllers = async (req, res, next) => {
@@ -47,7 +46,7 @@ export const patchUpdateControllers = async (req, res, next) => {
 
 export const deleteAnnouncementControllers = async (req, res, next) => {
   const { announId } = req.params;
-  console.log(`announId deleteUserControllers`, announId);
+//   console.log(`announId deleteUserControllers`, announId);
   const deleteAnnouncement = await deleteAnnouncementId(announId);
   if (!deleteAnnouncement) {
     next(createHttpError(404, `Not found user`));
