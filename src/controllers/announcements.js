@@ -2,8 +2,11 @@ import { deleteAnnouncementId, getAllAnnouncements, patchAnnouncementId, postCre
 
 
 export const getAnnouncementsControllers = async (req, res, next) => {
-    const announcementsAll = await getAllAnnouncements();
-    console.log('getAnnouncementsControllers', announcementsAll);
+  // console.log(`req.query`, req.query);
+  // const source = req.query;
+  // console.log(`source`, source);
+  const announcementsAll = await getAllAnnouncements(req.query);
+    // console.log('getAnnouncementsControllers', announcementsAll);
     res.json({
         status: 200,
         message: 'Successfully found announcement',

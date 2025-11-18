@@ -1,10 +1,38 @@
 import { AnnouncementsCollection } from "../db/models/announcement.js";
 
-export const getAllAnnouncements = async () => {
-    const announcementsAll = await AnnouncementsCollection.find();
-    // console.log('getAllAnnouncements', announcementsAll);
-    return announcementsAll;
-}
+
+
+
+// const parseSourceChapter = (announcementsAll, chapter) =>
+//   announcementsAll.filter((announcement) => announcement.chapter === chapter);
+
+export const getAllAnnouncements = async (payload) => {
+  const announcementsAll = await AnnouncementsCollection.find();
+  // console.log(`announcementsAll length`, announcementsAll.length);
+  // console.log(`announcementsAll`, announcementsAll);
+  // console.log(`source`, source);
+  const { chapter, category, purchaseSale } = payload;
+  console.log(`chapter`, chapter);
+  // console.log(`category`, category);
+  // console.log(`purchaseSale`, purchaseSale);
+  const chapterFilter = announcementsAll.filter((announcement) =>
+    chapter ? announcement.chapter === chapter : true
+  );
+  // console.log(`chapterFilter`, chapterFilter);
+  const categoryFilter = chapterFilter.filter((announcement) =>
+    category ? announcement.category === category : true
+  );
+  console.log(`categoryFilter`, categoryFilter);
+const purchaseSaleFilter = categoryFilter.filter((announcement) =>
+    purchaseSale ? announcement.purchaseSale === purchaseSale : true
+  );
+  console.log(`purchaseSaleFilter`, purchaseSaleFilter);
+  return purchaseSaleFilter;
+};
+
+
+
+
 
 export const postCreateAnnouncement = async (payload) => {
     const announcement = await AnnouncementsCollection.create(payload);
