@@ -30,15 +30,18 @@ const purchaseSaleFilter = categoryFilter.filter((announcement) =>
   return purchaseSaleFilter;
 };
 
+
 export const getAnnouncementById = async (payload) => {
   const { id } = payload;
   // console.log(`id services`, id);
   const announcementById = await AnnouncementsCollection.findById(id);
+  if (!announcementById) {
+    // console.log(`id services 2`, id);
+    const announcementByIdUser = await AnnouncementsCollection.find({ idUser: id });
+    return announcementByIdUser;
+  }
   return announcementById;
 }
-
-
-
 
 
 export const postCreateAnnouncement = async (payload) => {

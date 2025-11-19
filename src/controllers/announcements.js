@@ -16,7 +16,7 @@ export const getAnnouncementsControllers = async (req, res, next) => {
 
 
 export const getAnnouncementsIdControllers = async (req, res, next) => {
-  console.log(`req.params`, req.params);
+  // console.log(`req.params`, req.params);
   // const {id} = req.paramas;
   // console.log(`id`, id);
   const announcementsAll = await getAnnouncementById(req.params);
