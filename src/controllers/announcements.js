@@ -1,4 +1,4 @@
-import { deleteAnnouncementId, getAllAnnouncements, patchAnnouncementId, postCreateAnnouncement } from "../services/announcements.js";
+import { deleteAnnouncementId, getAllAnnouncements, getAnnouncementById, patchAnnouncementId, postCreateAnnouncement } from "../services/announcements.js";
 
 
 export const getAnnouncementsControllers = async (req, res, next) => {
@@ -13,6 +13,20 @@ export const getAnnouncementsControllers = async (req, res, next) => {
         data: announcementsAll,
     });
 }
+
+
+export const getAnnouncementsIdControllers = async (req, res, next) => {
+  console.log(`req.params`, req.params);
+  // const {id} = req.paramas;
+  // console.log(`id`, id);
+  const announcementsAll = await getAnnouncementById(req.params);
+  // console.log('getAnnouncementsControllers', announcementsAll);
+  res.json({
+    status: 200,
+    message: 'Successfully found announcement',
+    data: announcementsAll,
+  });
+};
 
 
 export const createAnnouncementControllers = async (req, res, next) => {
