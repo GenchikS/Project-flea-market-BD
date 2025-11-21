@@ -20,11 +20,11 @@ const announcementSchema = new Schema(
     },
     yar: {
       type: String,
-      required: false,
+      required: true,
     },
     price: {
       type: String,
-      required: false,
+      required: true,
     },
     text: {
       type: String,
