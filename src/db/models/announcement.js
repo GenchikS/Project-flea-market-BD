@@ -18,6 +18,10 @@ const announcementSchema = new Schema(
       type: String,
       required: false,
     },
+    price: {
+      type: String,
+      required: false,
+    },
     text: {
       type: String,
       required: true,
