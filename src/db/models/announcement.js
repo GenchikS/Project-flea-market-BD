@@ -4,15 +4,15 @@ const announcementSchema = new Schema(
   {
     idUser: {
       type: String,
-      required: true,
+      required: false,
     },
     chapter: {
       type: String,
-      required: true,
+      required: false,
     },
     category: {
       type: String,
-      required: true,
+      required: false,
     },
     purchaseSale: {
       type: String,
@@ -20,15 +20,15 @@ const announcementSchema = new Schema(
     },
     yar: {
       type: String,
-      required: true,
+      required: false,
     },
     price: {
       type: String,
-      required: true,
+      required: false,
     },
     text: {
       type: String,
-      required: true,
+      required: false,
     },
     photo: {
       type: String,
