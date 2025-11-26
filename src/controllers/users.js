@@ -77,11 +77,8 @@ export const getUserControllersById = async (req, res, next) => {
 // 3.2.4 Створюємо контроллер POST запиту
 export const createUserControllers = async (req, res, next) => {
   const createUser = await postCreateUser(req.body);
-  if (!createUser) {
-    next(createHttpError(404, `Користувача з данyим emeil вже зареєстровано! `));
-    return
-  }
-    res.status(201).json({
+  console.log(`createUser`, createUser);
+  res.status(201).json({
       status: 201,
       message: `Successfully created a user!`,
       data: createUser,

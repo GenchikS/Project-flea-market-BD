@@ -1,3 +1,4 @@
+import createHttpError from 'http-errors';
 import { UsersCollection } from '../db/models/user.js';
 
 // 2.2.12 Створення сервісу користувачів (пошук)
@@ -48,10 +49,10 @@ export const postCreateUser = async (payload) => {
   // console.log(`createUser`, payload);
   const { email } = payload;
   // console.log(`email`, email);
-  const userEmail = await UsersCollection.find({ email: email });
-  // console.log('userEmail', userEmail.length);
+  const userEmail = await UsersCollection.findOne({ email: email });
+  // console.log('userEmail', userEmail);
 
-  if(userEmail.length>0) {return}
+  if(userEmail) throw createHttpError(409);
 
   const user = await UsersCollection.create(payload);
 
