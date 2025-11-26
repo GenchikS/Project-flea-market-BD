@@ -46,9 +46,16 @@ export const getUserById = async (userId) => {
 // 3.2.2. Створюємо ф-цію додавання користувача
 export const postCreateUser = async (payload) => {
   // console.log(`createUser`, payload);
+  const { email } = payload;
+  // console.log(`email`, email);
+  const userEmail = await UsersCollection.find({ email: email });
+  // console.log('userEmail', userEmail.length);
+
+  if(userEmail.length>0) {return}
+
   const user = await UsersCollection.create(payload);
 
-  return user;;
+  return user;
 };
 
 // 3.2.1 Попереднє в файлі server.js

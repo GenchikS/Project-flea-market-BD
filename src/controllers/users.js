@@ -77,11 +77,15 @@ export const getUserControllersById = async (req, res, next) => {
 // 3.2.4 Створюємо контроллер POST запиту
 export const createUserControllers = async (req, res, next) => {
   const createUser = await postCreateUser(req.body);
-  res.status(201).json({
-    status: 201,
-    message: `Successfully created a user!`,
-    data: createUser,
-  });
+  if (!createUser) {
+    next(createHttpError(404, `Користувача з данyим emeil вже зареєстровано! `));
+    return
+  }
+    res.status(201).json({
+      status: 201,
+      message: `Successfully created a user!`,
+      data: createUser,
+    });
 }
 
 // 3.2.3 Попереднє в файлі src/routers/users.js
@@ -92,8 +96,9 @@ export const deleteUserControllers = async (req, res, next) => {
   const { userId } = req.params;
   // console.log(`userId deleteUserControllers`, userId);
   const deleteUser = await deleteUserId(userId);
+  console.log(`deleteUser`, deleteUser);
   if (!deleteUser) {
-    next(createHttpError(404, `Not found user`));
+    next(createHttpError(404, `Користувача з даним id не знайдено`));
     return;
   }
   res.status(204).send()
