@@ -5,19 +5,20 @@ const usersSchema = new Schema(
   {
     name: {
       type: String,
-      required: false,
+      required: true,
     },
     email: {
       type: String,
-      required: false,
+      required: true,
     },
-    // password: {
-    //   type: String,
-    //   required: true,
-    // },
+    password: {
+      type: String,
+      required: true,
+    },
     phone: {
       type: String,
       required: false,
+      default: ``,
     },
     role: {
       type: String,
