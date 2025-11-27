@@ -1,4 +1,4 @@
-import HttpError from 'http-errors';
+import { HttpError } from 'http-errors';
 // 3.1.10 Створення кастомної мідлвари для обробок помилок та видалемо її з server.js
 export const errorHandler = (err, req, res, next) => {
   // 3.1.15 Допрацюємо обробник помилок з 500 на 404
@@ -6,12 +6,13 @@ export const errorHandler = (err, req, res, next) => {
   // console.log(`err.status errorHandler`, err.status);
   // console.log(`err instanceof HttpError`, err instanceof HttpError);
 
-  if (err) {
-        res.status(err.status).json({
-            status: err.status,
-            message: err.name,
-          });
-        return;
+  if (err instanceof HttpError) {
+    res.status(err.status).json({
+      status: err.status,
+      message: err.name,
+      data:err.message,
+    });
+    return;
   }
 
   res.status(500).json({
@@ -19,7 +20,6 @@ export const errorHandler = (err, req, res, next) => {
     error: err.message,
   });
 };
-
 
 // 3.1.9 Попереднє в файлі src/routers/users.js
 // 3.1.11 Наступне в файлі server.js
