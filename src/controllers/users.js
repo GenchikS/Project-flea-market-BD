@@ -93,10 +93,10 @@ export const deleteUserControllers = async (req, res, next) => {
   const { userId } = req.params;
   // console.log(`userId deleteUserControllers`, userId);
   const deleteUser = await deleteUserId(userId);
-  console.log(`deleteUser`, deleteUser);
   if (!deleteUser) {
-    throw (createHttpError(404, `Користувача з даним id не знайдено`));
+    throw createHttpError(404, `Користувача з данним id не знайдено`)
   }
+
   res.status(204).send()
 }
 
