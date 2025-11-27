@@ -96,6 +96,7 @@ export const deleteUserControllers = async (req, res, next) => {
   console.log(`deleteUser`, deleteUser);
   if (!deleteUser) {
     throw (createHttpError(404, `Користувача з даним id не знайдено`));
+    // return;
   }
   res.status(204).send()
 }
