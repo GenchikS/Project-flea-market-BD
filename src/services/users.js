@@ -52,7 +52,7 @@ export const postCreateUser = async (payload) => {
   const userEmail = await UsersCollection.findOne({ email: email });
   // console.log('userEmail', userEmail);
 
-  if(userEmail) throw createHttpError(409);
+  if(userEmail) return null;
 
   const user = await UsersCollection.create(payload);
 
