@@ -53,7 +53,7 @@ router.post(`/user/add`, ctrlWrapper(createUserControllers));
 router.delete(`/user/delete/:userId`, ctrlWrapper(deleteUserControllers));
 
 // 3.2.6.2
-router.patch(`/user/updata/:userId`, patchUserIdControllers);
+router.patch(`/user/updata/:userId`, ctrlWrapper(patchUserIdControllers));
 
 
 export default router;

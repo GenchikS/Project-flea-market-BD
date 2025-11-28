@@ -33,7 +33,7 @@ export const getUsersControllers = async (req, res, next) => {
   // console.log('usersAll', usersAll);
   if (!usersAll) {
     // console.log(`Not userById`);
-     throw createHttpError(404, `User not found!`);
+     throw createHttpError(404, `Користувача не знайдено!`);
   }
     res.json({
       status: 200,
@@ -56,7 +56,7 @@ export const getUserControllersById = async (req, res, next) => {
               // next(new Error(`User not found`));
               // return;
               // 3.1.14 Видалим next для зміни помилки з 500 на 404 + в файлі src/middlwares/errorHandler.js
-              throw createHttpError(404, `User not found!`);
+              throw createHttpError(404, `Користувача з данним id не знайдено!`);
             }
         res.json({
           status: 200,
@@ -77,7 +77,7 @@ export const getUserControllersById = async (req, res, next) => {
 // 3.2.4 Створюємо контроллер POST запиту
 export const createUserControllers = async (req, res, next) => {
   const createUser = await postCreateUser(req.body);
-  console.log(`createUser`, createUser);
+  // console.log(`createUser`, createUser);
   res.status(201).json({
       status: 201,
       message: `Successfully created a user!`,
@@ -94,7 +94,7 @@ export const deleteUserControllers = async (req, res, next) => {
   // console.log(`userId deleteUserControllers`, userId);
   const deleteUser = await deleteUserId(userId);
   if (!deleteUser) {
-    throw createHttpError(404, `Користувача з данним id не знайдено`)
+    throw createHttpError(404, `Користувача з данним id не знайдено!`)
   }
 
   res.status(204).send()
@@ -110,8 +110,7 @@ export const patchUserIdControllers = async (req, res, next) => {
   });
 
   if (!patchUser) {
-    next(createHttpError(404, `User not found!`));
-    return;
+    throw createHttpError(404, `Користувача з данним id не знайдено!`);
   }
 
   res.status(201).json({
