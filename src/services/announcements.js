@@ -1,4 +1,5 @@
 import { AnnouncementsCollection } from "../db/models/announcement.js";
+import { UsersCollection } from "../db/models/user.js";
 
 
 
@@ -36,13 +37,13 @@ export const getAnnouncementById = async (payload) => {
   // console.log(`id services`, id);
   const announcementById = await AnnouncementsCollection.findById(id);
   if (announcementById) {
-    console.log(`announcementById`, announcementById);
+    // console.log(`announcementById`, announcementById);
     return announcementById;
   }
   if (!announcementById) {
     // console.log(`id services 2`, id);
     const announcementByIdUser = await AnnouncementsCollection.find({ idUser: id });
-    console.log(`announcementByIdUser`, announcementByIdUser);
+    // console.log(`announcementByIdUser`, announcementByIdUser);
     if (announcementByIdUser.length > 0) return announcementByIdUser;
     return null;
   }
@@ -50,8 +51,17 @@ export const getAnnouncementById = async (payload) => {
 
 
 export const postCreateAnnouncement = async (payload) => {
-    const announcement = await AnnouncementsCollection.create(payload);
-    return announcement
+  const { idUser } = payload;
+  // const announcementByIdUser = await AnnouncementsCollection.find({ idUser: idUser });
+  const announcementByIdUser = await UsersCollection.findById(idUser);
+  // console.log(`announcementByIdUser`, announcementByIdUser);
+  if (announcementByIdUser) {
+  const announcement = await AnnouncementsCollection.create(payload);
+  // console.log(`payload post`, payload);
+  return announcement;
+  }
+  if(!announcementByIdUser) return null
+// return null
 }
 
 export const patchAnnouncementId = async (idAnnoun, payload) => {
@@ -74,5 +84,6 @@ export const deleteAnnouncementId = async (announId) => {
     const id = announId;
     // console.log(`id deleteAnnonucementId`, id);
   const announcement = await AnnouncementsCollection.findByIdAndDelete(id);
-  return announcement;
+  if(announcement) return announcement;
+  if (!announcement) return null;
 };

@@ -38,6 +38,7 @@ export const getAnnouncementsIdControllers = async (req, res, next) => {
 
 export const createAnnouncementControllers = async (req, res, next) => {
   const response = await postCreateAnnouncement(req.body);
+  console.log(`response create`, response);
   res.status(201).json({
     status: 201,
     message: 'Successffully create announcent',
@@ -55,8 +56,7 @@ export const patchUpdateControllers = async (req, res, next) => {
   });
 
   if (!patchAnnouncement) {
-    next(createHttpError(404, `User not found!`));
-    return;
+    throw (createHttpError(404, `Оголошення з данним id не знайдено!`));
   }
 
   res.status(201).json({
@@ -71,8 +71,7 @@ export const deleteAnnouncementControllers = async (req, res, next) => {
   //   console.log(`announId deleteUserControllers`, announId);
   const deleteAnnouncement = await deleteAnnouncementId(announId);
   if (!deleteAnnouncement) {
-    next(createHttpError(404, `Not found user`));
-    return;
+    throw createHttpError(404, `Оголошення з данним id не знайдено!`);
   }
   res.status(204).send();
 };
