@@ -35,12 +35,17 @@ export const getAnnouncementById = async (payload) => {
   const { id } = payload;
   // console.log(`id services`, id);
   const announcementById = await AnnouncementsCollection.findById(id);
+  if (announcementById) {
+    console.log(`announcementById`, announcementById);
+    return announcementById;
+  }
   if (!announcementById) {
     // console.log(`id services 2`, id);
     const announcementByIdUser = await AnnouncementsCollection.find({ idUser: id });
-    return announcementByIdUser;
+    console.log(`announcementByIdUser`, announcementByIdUser);
+    if (announcementByIdUser.length > 0) return announcementByIdUser;
+    return null;
   }
-  return announcementById;
 }
 
 
