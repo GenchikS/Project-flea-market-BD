@@ -39,11 +39,14 @@ export const getAnnouncementsIdControllers = async (req, res, next) => {
 export const createAnnouncementControllers = async (req, res, next) => {
   const response = await postCreateAnnouncement(req.body);
   console.log(`response create`, response);
-  res.status(201).json({
-    status: 201,
-    message: 'Successffully create announcent',
-    data: response,
-  });
+  if (!response) {
+    throw createHttpError(404, `Користувача з данним id не знайдено!`);
+  }
+    res.status(201).json({
+      status: 201,
+      message: 'Successffully create announcent',
+      data: response,
+    });
 };
 
 export const patchUpdateControllers = async (req, res, next) => {
