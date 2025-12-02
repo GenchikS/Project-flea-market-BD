@@ -3,7 +3,10 @@ import { postCreateUser } from '../services/users.js';
 
 export const registerUserControllers = async (req, res, next) => {
   const createUser = await postCreateUser(req.body);
-  console.log(`createUser`, createUser);
+  if (!createUser) {
+    throw createHttpError(404, `Коримтува з данним email вже зареєстровано!`)
+  }
+    console.log(`createUser`, createUser);
   res.status(201).json({
     status: 201,
     message: `Successfully created a user!`,
