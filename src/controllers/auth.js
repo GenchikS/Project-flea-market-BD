@@ -1,12 +1,12 @@
 import createHttpError from 'http-errors';
-import { postCreateUser } from '../services/users.js';
+import { postLoginUser, postRegisterUser } from '../services/auth.js';
 
 export const registerUserControllers = async (req, res, next) => {
-  const createUser = await postCreateUser(req.body);
+  const createUser = await postRegisterUser(req.body);
   if (!createUser) {
-    throw createHttpError(404, `Користувача з данним email вже зареєстровано!`)
+    throw createHttpError(409, `Користувача з данним email вже зареєстровано!`)
   }
-    console.log(`createUser`, createUser);
+    // console.log(`createUser`, createUser);
   res.status(201).json({
     status: 201,
     message: `Successfully created a user!`,
@@ -16,5 +16,11 @@ export const registerUserControllers = async (req, res, next) => {
 
 
 export const loginUserControllers = async (req, res, next) => {
-    console.log(`login`)
+  const loginUser = await postLoginUser(req.body);
+  // console.log(`loginUser`, loginUser);
+  res.status(200).json({
+    status: 200,
+    massege: `Found user!`,
+    data: loginUser,
+  });
 }

@@ -38,7 +38,7 @@ export const getAnnouncementsIdControllers = async (req, res, next) => {
 
 export const createAnnouncementControllers = async (req, res, next) => {
   const response = await postCreateAnnouncement(req.body);
-  console.log(`response create`, response);
+  // console.log(`response create`, response);
   if (!response) {
     throw createHttpError(404, `Користувача з данним id не знайдено!`);
   }

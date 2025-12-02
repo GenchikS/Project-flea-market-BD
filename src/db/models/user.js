@@ -34,6 +34,12 @@ const usersSchema = new Schema(
   },
 );
 
+usersSchema.methods.toJSON = function () {
+  const obj = this.toObject();
+  delete obj.password;
+  return obj;
+}
+
 export const UsersCollection = model('users', usersSchema);
 
 // 2.2.10 Попереднє в файлі server.js
