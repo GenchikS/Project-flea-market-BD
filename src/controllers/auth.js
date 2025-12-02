@@ -1,5 +1,6 @@
 import createHttpError from 'http-errors';
 import { postLoginUser, postRegisterUser } from '../services/auth.js';
+import { ONE_DAY } from '../constants/index.js';
 
 export const registerUserControllers = async (req, res, next) => {
   const createUser = await postRegisterUser(req.body);
@@ -16,11 +17,22 @@ export const registerUserControllers = async (req, res, next) => {
 
 
 export const loginUserControllers = async (req, res, next) => {
-  const loginUser = await postLoginUser(req.body);
+  // const loginUser = await postLoginUser(req.body);
+  const session = await postLoginUser(req.body);
+
   // console.log(`loginUser`, loginUser);
+  res.cookie(`refreshToken`, session.refreshToken, {
+    httpOnly: true,
+    expires: new Date(Date.now() + ONE_DAY),
+  });
+  res.cookie('sessionId', session._id, {
+    httpOnly: true,
+    expires: new Date(Date.now() + ONE_DAY),
+  });
+
   res.status(200).json({
     status: 200,
     massege: `Found user!`,
-    data: loginUser,
+    data: { accessToken: session.accessToken },
   });
 }

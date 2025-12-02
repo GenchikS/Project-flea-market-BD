@@ -7,6 +7,7 @@ import { getEnvVar } from './utils/getEnvVar.js';
 import allRouter from './routers/indexRouters.js'
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundRouter } from './middlewares/notFoundRourer.js';
+import cookieParser from 'cookie-parser';
 
 // видаляємо імпорти, бо були перенесені
 // import dotenv from 'dotenv';
@@ -37,6 +38,7 @@ export const startServer = () => {
 
   // 3.2.1 Доналаштовуємо Express для робота з req.body
   app.use(express.json());
+  app.use(cookieParser());
 
   // 3.1.1.1 Переносимо  маршрути в src/routers/users.js
   //  app.get(`/users`, async (req, res) => {
