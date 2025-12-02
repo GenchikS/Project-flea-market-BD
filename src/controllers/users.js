@@ -5,7 +5,6 @@ import {
   deleteUserId,
   getAllUsers,
   getUserById,
-  // getUserByName,
   patchUserId,
   postCreateUser,
 } from '../services/users.js';
@@ -77,6 +76,10 @@ export const getUserControllersById = async (req, res, next) => {
 // 3.2.4 Створюємо контроллер POST запиту
 export const createUserControllers = async (req, res, next) => {
   const createUser = await postCreateUser(req.body);
+  if (!createUser) {
+    throw createHttpError(404, `Користувача з данним id не знайдено!`);
+  }
+
   // console.log(`createUser`, createUser);
   res.status(201).json({
       status: 201,
