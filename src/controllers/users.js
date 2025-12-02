@@ -77,7 +77,7 @@ export const getUserControllersById = async (req, res, next) => {
 export const createUserControllers = async (req, res, next) => {
   const createUser = await postCreateUser(req.body);
   if (!createUser) {
-    throw createHttpError(404, `Користувача з данним id не знайдено!`);
+    throw createHttpError(404, `Користувача з данним email вже зареєстровано!`);
   }
 
   // console.log(`createUser`, createUser);
