@@ -42,7 +42,6 @@ export const postLoginUser = async (payload) => {
   const accessToken = randomBytes(30).toString(`base64`);
   const refreshToken = randomBytes(30).toString(`base64`);
   return await SessionsCollection.create({
-    data: user,
     idUser: user._id,
     accessToken,
     refreshToken,
