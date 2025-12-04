@@ -34,5 +34,6 @@ export const loginUserControllers = async (req, res, next) => {
     status: 200,
     massege: `Found user!`,
     data: session,
+    accessToken: { accessToken: session.accessToken },
   });
 }
