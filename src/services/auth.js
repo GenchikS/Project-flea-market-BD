@@ -28,7 +28,7 @@ export const postLoginUser = async (payload) => {
     // const { email } = payload;
     // console.log(`email`, payload.email);
     const user = await UsersCollection.findOne({ email: payload.email });
-    console.log(`user`, user);
+    // console.log(`user`, user);
     if (!user) {
         throw createHttpError(401, `Користувача з даним email не знайдено!`)
     }
@@ -41,11 +41,21 @@ export const postLoginUser = async (payload) => {
 
   const accessToken = randomBytes(30).toString(`base64`);
   const refreshToken = randomBytes(30).toString(`base64`);
-  return await SessionsCollection.create({
+  const createNewSession = await SessionsCollection.create({
     idUser: user._id,
     accessToken,
     refreshToken,
     accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
     refreshTokenValidUntil: new Date(Date.now() + ONE_DAY)
-    })
+  })
+
+  return {
+    user,
+    createNewSession,
+  };
 }
+
+
+export const logoutUser = async (sessionId) => {
+  await SessionsCollection.deleteOne({ _id: sessionId });
+};
