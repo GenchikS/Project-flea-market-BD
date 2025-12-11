@@ -1,5 +1,5 @@
 import createHttpError from 'http-errors';
-import { postLoginUser, postRegisterUser } from '../services/auth.js';
+import { logoutUser, postLoginUser, postRegisterUser } from '../services/auth.js';
 import { ONE_DAY } from '../constants/index.js';
 
 export const registerUserControllers = async (req, res, next) => {
@@ -21,18 +21,38 @@ export const loginUserControllers = async (req, res, next) => {
   const session = await postLoginUser(req.body);
 
   // console.log(`loginUser`, loginUser);
-  res.cookie(`refreshToken`, session.refreshToken, {
+  res.cookie(`refreshToken`, session.createNewSession.refreshToken, {
     httpOnly: true,
     expires: new Date(Date.now() + ONE_DAY),
   });
-  res.cookie('sessionId', session._id, {
+  res.cookie('sessionId', session.createNewSession._id, {
     httpOnly: true,
     expires: new Date(Date.now() + ONE_DAY),
   });
 
+  // console.log(`session`, session);
+
   res.status(200).json({
     status: 200,
     massege: `Found user!`,
-    data: { accessToken: session.accessToken },
+    // data: session.user,
+    data: {
+      accessToken: session.createNewSession.accessToken,
+      user: session.user,
+    },
   });
+}
+
+
+export const logoutUserControllers = async (req, res) => {
+  console.log(`req.cookies`, req.cookies);
+
+  // console.log(`req.cookies.sessionId`, req.cookies.sessionId);
+  if (req.cookies.sessionId) {
+    await logoutUser(req.cookies.sessionId);
+  }
+  res.clearCookie('sessionId');
+  res.clearCookie('refreshToken');
+
+  res.status(204).send();
 }
