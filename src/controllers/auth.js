@@ -35,16 +35,16 @@ export const loginUserControllers = async (req, res, next) => {
   res.status(200).json({
     status: 200,
     massege: `Found user!`,
-    // data: session.user,
     data: session.user,
+    token: session.createNewSession.accessToken,
   });
 }
 
 
 export const logoutUserControllers = async (req, res) => {
-  console.log(`req.cookies`, req.cookies);
+  // console.log(`req.cookies`, req.cookies);
 
-  // console.log(`req.cookies.sessionId`, req.cookies.sessionId);
+  console.log(`req.cookies.sessionId`, req.cookies.sessionId);
   if (req.cookies.sessionId) {
     await logoutUser(req.cookies.sessionId);
   }
