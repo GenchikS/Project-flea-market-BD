@@ -57,6 +57,6 @@ export const postLoginUser = async (payload) => {
 
 
 export const logoutUser = async (sessionId) => {
-  console.log(`sessionId`, sessionId);
+  // console.log(`sessionId`, sessionId);
   await SessionsCollection.deleteOne({ _id: sessionId });
 };
