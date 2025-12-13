@@ -43,16 +43,19 @@ export const loginUserControllers = async (req, res, next) => {
 
 
 export const logoutUserControllers = async (req, res) => {
-  // console.log(`req`, req);
+  // console.log(`req`, req.params);
+  // const [sessionId] = req.params;
 
-  // console.log(`req.cookies.sessionId`, req.cookies.sessionId);
+  // if (sessionId)
+    // if (req.cookies.sessionId) {
+      // console.log(`req.cookies.sessionId`, req.cookies.sessionId);
 
-  if (req.cookies.sessionId) {
-    await logoutUser(req.cookies.sessionId);
-  }
-    if (!req.cookies.sessionId) {
-      throw createHttpError(401, `Помилка авторизації!`);
-    }
+      await logoutUser(req.cookies.sessionId);
+    // }
+  // if (!req.cookies.sessionId) {
+  //     await logoutUser(sessionId);
+  //     // throw createHttpError(401, `Помилка авторизації!`);
+  //   }
   res.clearCookie('sessionId');
   res.clearCookie('refreshToken');
   res.status(204).send();
