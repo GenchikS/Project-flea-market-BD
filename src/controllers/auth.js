@@ -45,15 +45,15 @@ export const loginUserControllers = async (req, res, next) => {
 export const logoutUserControllers = async (req, res) => {
   // console.log(`req.cookies`, req.cookies);
 
-  console.log(`req.cookies.sessionId`, req.cookies.sessionId);
-  if (req.cookies.sessionId) {
+  // console.log(`req.cookies.sessionId`, req.cookies.sessionId);
+  // if (req.cookies.sessionId) {
     await logoutUser(req.cookies.sessionId);
-  }
+  // }
   res.clearCookie('sessionId');
   res.clearCookie('refreshToken');
 
   if (!req.cookies.sessionId) {
    throw createHttpError(401, `Помилка авторизації!`);
   }
-  res.status(200).send();
+  res.status(204).send();
 }
