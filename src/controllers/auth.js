@@ -43,7 +43,7 @@ export const loginUserControllers = async (req, res, next) => {
 
 
 export const logoutUserControllers = async (req, res) => {
-  console.log(`req`, req);
+  // console.log(`req`, req);
 
   // console.log(`req.cookies.sessionId`, req.cookies.sessionId);
 

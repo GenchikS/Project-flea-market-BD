@@ -26,19 +26,18 @@ const PORT = Number(getEnvVar('PORT', '3000'))
 export const startServer = () => {
   const app = express();
 
-  app.use(cors());
-
-  app.use(
-    pino({
-      transport: {
-        target: `pino-pretty`,
-      },
-    }),
-  );
-
   // 3.2.1 Доналаштовуємо Express для робота з req.body
   app.use(express.json());
+  app.use(cors());
   app.use(cookieParser());
+
+   app.use(
+     pino({
+       transport: {
+         target: `pino-pretty`,
+       },
+     }),
+   );
 
   // 3.1.1.1 Переносимо  маршрути в src/routers/users.js
   //  app.get(`/users`, async (req, res) => {
