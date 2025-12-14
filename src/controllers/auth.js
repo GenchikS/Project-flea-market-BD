@@ -58,7 +58,7 @@ export const logoutUserControllers = async (req, res, next) => {
   res.clearCookie('refreshToken');
   // res.status(204);
   res.status(204).json({
-    status: 200,
+    status: 204,
     data: response,
   });
 }

@@ -58,7 +58,7 @@ export const postLoginUser = async (payload) => {
 
 export const logoutUser = async (sessionId) => {
   // console.log(`sessionId`, sessionId);
-    await SessionsCollection.findOneAndDelete({ _id: sessionId });
-  // const response = "delete"
+    // await SessionsCollection.findOneAndDelete({ _id: sessionId });
+  const response = "delete"
   return null;
 };
