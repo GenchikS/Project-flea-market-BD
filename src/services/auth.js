@@ -60,5 +60,5 @@ export const logoutUser = async (sessionId) => {
   // console.log(`sessionId`, sessionId);
     // await SessionsCollection.findOneAndDelete({ _id: sessionId });
   const response = "delete"
-  return null;
+  return response;
 };
