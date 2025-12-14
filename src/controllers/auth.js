@@ -45,21 +45,17 @@ export const loginUserControllers = async (req, res, next) => {
 export const logoutUserControllers = async (req, res, next) => {
   const { sessionId } = req.body;
   // console.log(`sessionId:`, sessionId);
+  const response = await logoutUser(sessionId);
 
-  // if (sessionId) {
-    const response = await logoutUser(sessionId);
-  // return response;
-  // }
-    // if (!sessionId) {
-    //   throw createHttpError(401, `Помилка авторизації!`);
-    // }
+    if (!sessionId) {
+      throw createHttpError(401, `Помилка авторизації!`);
+    }
 
-  // res.clearCookie('sessionId');
-  // res.clearCookie('refreshToken');
-  // res.status(204);
-  res.status(204).json({
-    status: 200,
-    massege: `Delete session!`,
-    data: "response",
+  res.clearCookie('sessionId');
+  res.clearCookie('refreshToken');
+  res.status(201).json({
+    status: 201,
+    massege: `Вихід виконано!`,
+    error: response,
   });
 }
