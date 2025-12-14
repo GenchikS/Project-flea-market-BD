@@ -54,8 +54,8 @@ export const logoutUserControllers = async (req, res, next) => {
     //   throw createHttpError(401, `Помилка авторизації!`);
     // }
 
-  // res.clearCookie('sessionId');
-  // res.clearCookie('refreshToken');
+  res.clearCookie('sessionId');
+  res.clearCookie('refreshToken');
   // res.status(204).send();
   res.status(200).json({
     status: 200,
