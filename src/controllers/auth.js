@@ -37,7 +37,7 @@ export const loginUserControllers = async (req, res, next) => {
     massege: `Found user!`,
     data: session.user,
     sessionId: session.createNewSession._id,
-    token: session.createNewSession.accessToken,
+    accessToken: session.createNewSession.accessToken,
   });
 }
 
