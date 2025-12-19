@@ -5,18 +5,18 @@ import { loginUserSchema, registerUserSchema } from "../validation/auth.js";
 import { validateBody } from "../middlewares/validateBody.js";
 
 
-const router = Router();
+const authRouter = Router();
 
-// router.get(`/announcements`, getAnnouncementsControllers);
-// router.get(`/announcements/:id`, getAnnouncementsIdControllers);
-router.post(
+authRouter.post(
   `/auth/register`,
   validateBody(registerUserSchema),
   ctrlWrapper(registerUserControllers),
 );
-router.post(`/auth/login`, validateBody(loginUserSchema), ctrlWrapper(loginUserControllers));
+authRouter.post(
+  `/auth/login`,
+  validateBody(loginUserSchema),
+  ctrlWrapper(loginUserControllers),
+);
+authRouter.post(`/auth/logout`, ctrlWrapper(logoutUserControllers));
 
-router.post(`/auth/logout`, ctrlWrapper(logoutUserControllers));
-// router.delete(`/announcement/delete/:announId`, deleteAnnouncementControllers);
-
-export default router;
+export default authRouter;

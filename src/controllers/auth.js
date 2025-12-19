@@ -1,61 +1,85 @@
 import createHttpError from 'http-errors';
 import { logoutUser, postLoginUser, postRegisterUser } from '../services/auth.js';
-import { ONE_DAY } from '../constants/index.js';
 
-export const registerUserControllers = async (req, res, next) => {
+export const registerUserControllers = async (req, res) => {
   const createUser = await postRegisterUser(req.body);
-  if (!createUser) {
-    throw createHttpError(409, `Користувача з данним email вже зареєстровано!`)
-  }
+
     // console.log(`createUser`, createUser);
   res.status(201).json({
     status: 201,
-    message: `Successfully created a user!`,
+    message: `Користувача зареєстровано!`,
     data: createUser,
   });
 };
 
 
-export const loginUserControllers = async (req, res, next) => {
+export const loginUserControllers = async (req, res) => {
   // const loginUser = await postLoginUser(req.body);
   const session = await postLoginUser(req.body);
-
   // console.log(`loginUser`, loginUser);
-  res.cookie(`refreshToken`, session.createNewSession.refreshToken, {
-    httpOnly: true,
-    expires: new Date(Date.now() + ONE_DAY),
-  });
-  res.cookie('sessionId', session.createNewSession._id, {
-    httpOnly: true,
-    expires: new Date(Date.now() + ONE_DAY),
-  });
 
   // console.log(`session`, session);
+  res.cookie(`refreshToken`, session.refreshToken, {
+    httpOnly: true,
+    expires: session.refreshTokenValidUntil,
+  });
+  res.cookie('sessionId', session.sessionId, {
+    httpOnly: true,
+    expires: session.refreshTokenValidUntil,
+  });
+
 
   res.status(200).json({
     status: 200,
     massege: `Found user!`,
-    data: session.user,
-    sessionId: session.createNewSession._id,
-    accessToken: session.createNewSession.accessToken,
+    data: {
+      sessionId: session.sessionId,
+      idUser: session.idUser,
+      accessToken: session.accessToken,
+      name: session.name,
+      email: session.email,
+      role: session.role,
+    },
+    // sessionId: session._id,
+    // data: {
+    // accessToken: session.accessToken
+    // },
   });
 }
 
 
-export const logoutUserControllers = async (req, res, next) => {
-  const { sessionId } = req.body;
-  // console.log(`sessionId:`, sessionId);
-  const response = await logoutUser(sessionId);
+// export const logoutUserControllers = async (req, res, next) => {
+//   const { sessionId } = req.body;
+//   // console.log(`sessionId:`, sessionId);
+//   const response = await logoutUser(sessionId);
 
-    if (!sessionId) {
-      throw createHttpError(401, `Помилка авторизації!`);
-    }
+//     if (!sessionId) {
+//       throw createHttpError(401, `Помилка авторизації!`);
+//     }
+
+//   res.clearCookie('sessionId');
+//   res.clearCookie('refreshToken');
+//   res.status(201).json({
+//     status: 201,
+//     massege: `Вихід виконано!`,
+//     error: response,
+//   });
+// }
+
+export const logoutUserControllers = async (req, res, next) => {
+  // console.log(`req.cookies.sessionId:`, req.cookies);
+  if (req.cookies.sessionId) {
+    await logoutUser(req.cookies.sessionId);
+  }
+
+      if (!req.cookies.sessionId) {
+        throw createHttpError(401, `Помилка авторизації!`);
+      }
 
   res.clearCookie('sessionId');
   res.clearCookie('refreshToken');
-  res.status(201).json({
-    status: 201,
-    massege: `Вихід виконано!`,
-    error: response,
-  });
-}
+
+  res.status(204).send();
+};
+
+

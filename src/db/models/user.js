@@ -1,5 +1,5 @@
 // 2.2.11 Створення схеми user
-import { model, Schema } from 'mongoose';
+ import { model, Schema } from 'mongoose';
 
 const usersSchema = new Schema(
   {

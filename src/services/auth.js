@@ -12,15 +12,17 @@ export const postRegisterUser = async (payload) => {
   const userEmail = await UsersCollection.findOne({ email: email });
   // console.log('userEmail', userEmail);
 
-  if(userEmail) return null;
-
+   if (userEmail) {
+     throw createHttpError(
+       409,
+       `Користувача з данним email вже зареєстровано!`,
+     );
+   }
     const encryptedPassword = await bcrypt.hash(payload.password, 10);
-    const user = await UsersCollection.create({
+  return await UsersCollection.create({
       ...payload,
       password: encryptedPassword,
     });
-
-  return user;
 };
 
 
@@ -28,7 +30,7 @@ export const postLoginUser = async (payload) => {
     // const { email } = payload;
     // console.log(`email`, payload.email);
     const user = await UsersCollection.findOne({ email: payload.email });
-    // console.log(`user`, user);
+    console.log(`user`, user);
     if (!user) {
         throw createHttpError(401, `Користувача з даним email не знайдено!`)
     }
@@ -41,17 +43,31 @@ export const postLoginUser = async (payload) => {
 
   const accessToken = randomBytes(30).toString(`base64`);
   const refreshToken = randomBytes(30).toString(`base64`);
-  const createNewSession = await SessionsCollection.create({
-    idUser: user._id,
-    accessToken,
-    refreshToken,
-    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
-    refreshTokenValidUntil: new Date(Date.now() + ONE_DAY)
-  })
+
+  // return await SessionsCollection.create({
+  //   idUser: user._id,
+  //   accessToken,
+  //   refreshToken,
+  //   accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+  //   refreshTokenValidUntil: new Date(Date.now() + ONE_DAY)
+  // })
+
+    const sessionUser = await SessionsCollection.create({
+      idUser: user._id,
+      accessToken,
+      refreshToken,
+      accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+      refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
+    });
 
   return {
-    user,
-    createNewSession,
+    sessionId: sessionUser._id,
+    idUser: sessionUser.idUser,
+    accessToken: sessionUser.accessToken,
+    refreshToken: sessionUser.refreshToken,
+    name: user.name,
+    role: user.role,
+    email: user.email,
   };
 }
 
@@ -61,3 +77,6 @@ export const logoutUser = async (sessionId) => {
   await SessionsCollection.deleteOne({ _id: sessionId });
   return ;
 };
+
+
+export const findSession = (filter) => SessionsCollection.findOne(filter);

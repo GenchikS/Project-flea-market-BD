@@ -3,7 +3,7 @@ import { Schema, model } from "mongoose";
 
 const sessionsSchema = new Schema(
   {
-    idUser: { type: Schema.Types.ObjectId, ref: `user` },
+    idUser: { type: Schema.Types.ObjectId, ref: `users`, required: true },
     accessToken: { type: String, required: true },
     refreshToken: { type: String, required: true },
     accessTokenValidUntil: { type: Date, required: true },
@@ -16,3 +16,5 @@ const sessionsSchema = new Schema(
 );
 
 export const SessionsCollection = model(`sessions`, sessionsSchema);
+
+//  ref: `users` - з якої таблиці брати id
