@@ -30,7 +30,7 @@ export const postLoginUser = async (payload) => {
     // const { email } = payload;
     // console.log(`email`, payload.email);
     const user = await UsersCollection.findOne({ email: payload.email });
-    console.log(`user`, user);
+    // console.log(`user`, user);
     if (!user) {
         throw createHttpError(401, `Користувача з даним email не знайдено!`)
     }
@@ -68,6 +68,7 @@ export const postLoginUser = async (payload) => {
     name: user.name,
     role: user.role,
     email: user.email,
+    phone: user.phone,
   };
 }
 
