@@ -44,15 +44,7 @@ export const postLoginUser = async (payload) => {
   const accessToken = randomBytes(30).toString(`base64`);
   const refreshToken = randomBytes(30).toString(`base64`);
 
-  // return await SessionsCollection.create({
-  //   idUser: user._id,
-  //   accessToken,
-  //   refreshToken,
-  //   accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
-  //   refreshTokenValidUntil: new Date(Date.now() + ONE_DAY)
-  // })
-
-    const sessionUser = await SessionsCollection.create({
+   const sessionUser = await SessionsCollection.create({
       idUser: user._id,
       accessToken,
       refreshToken,
@@ -75,8 +67,11 @@ export const postLoginUser = async (payload) => {
 
 export const logoutUser = async (sessionId) => {
   // console.log(`sessionId`, sessionId);
-  await SessionsCollection.deleteOne({ _id: sessionId });
-  return ;
+  const sessionUserId = await SessionsCollection.findOne({ _id: sessionId });
+  if (sessionUserId) {
+     await SessionsCollection.deleteOne({ _id: sessionId });
+  }
+return;
 };
 
 

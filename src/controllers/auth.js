@@ -28,7 +28,6 @@ export const loginUserControllers = async (req, res) => {
     expires: session.refreshTokenValidUntil,
   });
 
-
   res.status(200).json({
     status: 200,
     massege: `Found user!`,
@@ -41,48 +40,30 @@ export const loginUserControllers = async (req, res) => {
       email: session.email,
       phone: session.phone,
     },
-    // sessionId: session._id,
-    // data: {
-    // accessToken: session.accessToken
-    // },
   });
 }
 
 
-// export const logoutUserControllers = async (req, res, next) => {
-//   const { sessionId } = req.body;
-//   // console.log(`sessionId:`, sessionId);
-//   const response = await logoutUser(sessionId);
-
-//     if (!sessionId) {
-//       throw createHttpError(401, `Помилка авторизації!`);
-//     }
-
-//   res.clearCookie('sessionId');
-//   res.clearCookie('refreshToken');
-//   res.status(201).json({
-//     status: 201,
-//     massege: `Вихід виконано!`,
-//     error: response,
-//   });
-// }
-
 export const logoutUserControllers = async (req, res, next) => {
   // console.log(`req.cookies`, req.cookies);
   // console.log(`req.body`, req.body);
+  const { sessionId } = req.body;
 
-  if (req.cookies.sessionId) {
-    await logoutUser(req.cookies.sessionId);
+  if (!sessionId) {
+    throw createHttpError(401, `Помилка авторизації!`);
   }
 
-  if (!req.cookies.sessionId) {
-    throw createHttpError(401, `Помилка авторизації!`);
+  if (sessionId) {
+     await logoutUser(sessionId);
   }
 
   res.clearCookie('sessionId');
   res.clearCookie('refreshToken');
 
-  res.status(204)();
+  res.status(201).json({
+    status: 201,
+    massege: `Вихід виконано!`,
+  });
 };
 
 
