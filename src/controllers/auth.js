@@ -33,7 +33,7 @@ export const loginUserControllers = async (req, res) => {
     massege: `Found user!`,
     data: {
       sessionId: session.sessionId,
-      idUser: session.idUser,
+      _id: session.idUser,
       accessToken: session.accessToken,
       role: session.role,
       name: session.name,
