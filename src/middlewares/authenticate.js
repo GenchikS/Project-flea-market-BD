@@ -8,7 +8,7 @@ export const authenticate = async (req, res, next) => {
     if (!authHeader) {
         return next(createHttpError(401, "Неавторизований заголовок користувача!"))
     }
-    console.log('authHeader:', authHeader);
+    // console.log('authHeader:', authHeader);
 
     const [bearer, token] = authHeader.split(" ")
 

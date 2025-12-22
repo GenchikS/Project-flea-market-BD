@@ -1,4 +1,4 @@
-import createHttpError from 'http-errors';
+// import createHttpError from 'http-errors';
 import { UsersCollection } from '../db/models/user.js';
 
 // 2.2.12 Створення сервісу користувачів (пошук)
