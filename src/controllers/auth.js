@@ -63,6 +63,7 @@ export const logoutUserControllers = async (req, res, next) => {
   res.status(201).json({
     status: 201,
     massege: `Вихід виконано!`,
+    data: `Вихід виконано!`,
   });
 };
 
