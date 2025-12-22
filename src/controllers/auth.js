@@ -49,9 +49,9 @@ export const logoutUserControllers = async (req, res, next) => {
   // console.log(`req.body`, req.body);
   const { sessionId } = req.body;
 
-  // if (!sessionId) {
-  //   throw createHttpError(401, `Помилка авторизації!`);
-  // }
+  if (!sessionId) {
+    throw createHttpError(401, `Помилка авторизації!`);
+  }
 
   if (sessionId) {
      await logoutUser(sessionId);
