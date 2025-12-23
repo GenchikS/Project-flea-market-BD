@@ -26,12 +26,12 @@ export const getAnnouncementsIdControllers = async (req, res, next) => {
   // console.log(`id`, id);
   const announcementsAll = await getAnnouncementById(req.params);
   if (!announcementsAll) {
-    throw createHttpError(404, `Оголошення за данним id не знайдено!`);
+    throw createHttpError(404, `Нажаль ваших оголошень не знайдено!`);
   }
   // console.log('getAnnouncementsControllers', announcementsAll);
   res.json({
     status: 200,
-    message: 'Successfully found announcement',
+    message: 'Знайдені оголошення!',
     data: announcementsAll,
   });
 };
