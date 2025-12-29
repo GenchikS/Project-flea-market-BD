@@ -2,6 +2,7 @@ import createHttpError from 'http-errors';
 import {
   deleteAnnouncementId,
   getAllAnnouncements,
+  getAllAnnouncementsPagination,
   getAnnouncementById,
   patchAnnouncementId,
   postCreateAnnouncement,
@@ -11,12 +12,20 @@ export const getAnnouncementsControllers = async (req, res, next) => {
   // console.log(`req.query`, req.query);
   // const source = req.query;
   // console.log(`source`, source);
+  let { perPage, page } = req.query;
+  perPage = perPage ?? 4;
+  page = page ?? 1;
   const announcementsAll = await getAllAnnouncements(req.query);
-  // console.log('getAnnouncementsControllers', announcementsAll);
+  // console.log('announcementsAll', announcementsAll);
+  const paginationData = await getAllAnnouncementsPagination(
+    announcementsAll,
+    perPage,
+    page,
+  );
   res.json({
     status: 200,
     message: 'Successfully found announcement',
-    data: announcementsAll,
+    data: paginationData,
   });
 };
 

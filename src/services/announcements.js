@@ -1,35 +1,57 @@
 import { AnnouncementsCollection } from "../db/models/announcement.js";
 import { UsersCollection } from "../db/models/user.js";
+import { calculatePagonationData } from "../utils/calculatePagonationData.js";
 
-
-
-
-// const parseSourceChapter = (announcementsAll, chapter) =>
-//   announcementsAll.filter((announcement) => announcement.chapter === chapter);
 
 export const getAllAnnouncements = async (payload) => {
-  const announcementsAll = await AnnouncementsCollection.find();
-  // console.log(`announcementsAll length`, announcementsAll.length);
-  // console.log(`announcementsAll`, announcementsAll);
-  // console.log(`source`, source);
   const { chapter, category, purchaseSale } = payload;
   // console.log(`chapter`, chapter);
-  // console.log(`category`, category);
-  // console.log(`purchaseSale`, purchaseSale);
+
+  const announcementsAll = await AnnouncementsCollection.find();
+  // console.log(`announcementsAll`, announcementsAll);
+
   const chapterFilter = announcementsAll.filter((announcement) =>
-    chapter ? announcement.chapter === chapter : true
+    chapter ? announcement.chapter === chapter : true,
   );
   // console.log(`chapterFilter`, chapterFilter);
   const categoryFilter = chapterFilter.filter((announcement) =>
-    category ? announcement.category === category : true
+    category ? announcement.category === category : true,
   );
   // console.log(`categoryFilter`, categoryFilter);
-const purchaseSaleFilter = categoryFilter.filter((announcement) =>
-    purchaseSale ? announcement.purchaseSale === purchaseSale : true
+  const purchaseSaleFilter = categoryFilter.filter((announcement) =>
+    purchaseSale ? announcement.purchaseSale === purchaseSale : true,
   );
   // console.log(`purchaseSaleFilter`, purchaseSaleFilter);
-  return purchaseSaleFilter;
+
+  return purchaseSaleFilter
 };
+
+
+export const getAllAnnouncementsPagination = async (payload, perPage, page) => {
+  // console.log(`payload`, payload);
+
+  const limit = perPage;
+  const skip = (page - 1) * perPage;
+  // console.log(`skip`, skip);
+
+  const announcementData = payload.slice(skip, limit);
+  // console.log(`announcementData`, announcementData);
+
+  const announcementsCount = payload.length;
+  const paginationData = calculatePagonationData(
+    announcementsCount,
+    perPage,
+    page,
+  );
+
+  return {
+    data: announcementData,
+    ...paginationData,
+  };
+};
+
+
+
 
 
 export const getAnnouncementById = async (payload) => {
