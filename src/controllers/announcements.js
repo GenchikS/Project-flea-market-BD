@@ -23,10 +23,10 @@ export const getAnnouncementsControllers = async (req, res, next) => {
     page,
   );
     res.json({
-    status: 200,
-    message: 'Successfully found announcement',
-    data: paginationData,
-  });
+      status: 200,
+      message: 'Знайдені оголошення:',
+      data: paginationData,
+    });
 };
 
 export const getAnnouncementsIdControllers = async (req, res, next) => {
@@ -46,7 +46,7 @@ export const getAnnouncementsIdControllers = async (req, res, next) => {
 
   res.json({
     status: 200,
-    message: 'Знайдені оголошення!',
+    message: 'Знайдені оголошення:',
     data: paginationData,
   });
 };
@@ -59,7 +59,7 @@ export const createAnnouncementControllers = async (req, res, next) => {
   }
     res.status(201).json({
       status: 201,
-      message: 'Successffully create announcent',
+      message: 'Оголошення створено',
       data: response,
     });
 };
