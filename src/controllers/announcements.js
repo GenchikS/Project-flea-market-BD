@@ -22,7 +22,7 @@ export const getAnnouncementsControllers = async (req, res, next) => {
     perPage,
     page,
   );
-  res.json({
+    res.json({
     status: 200,
     message: 'Successfully found announcement',
     data: paginationData,
@@ -33,15 +33,21 @@ export const getAnnouncementsIdControllers = async (req, res, next) => {
   // console.log(`req.params`, req.params);
   // const {id} = req.paramas;
   // console.log(`id`, id);
+    let { perPage, page } = req.query;
+    perPage = perPage ?? 4;
+    page = page ?? 1;
   const announcementsAll = await getAnnouncementById(req.params);
-  if (!announcementsAll) {
-    throw createHttpError(404, `Нажаль ваших оголошень не знайдено!`);
-  }
   // console.log('getAnnouncementsControllers', announcementsAll);
+  const paginationData = await getAllAnnouncementsPagination(
+    announcementsAll,
+    perPage,
+    page,
+  );
+
   res.json({
     status: 200,
     message: 'Знайдені оголошення!',
-    data: announcementsAll,
+    data: paginationData,
   });
 };
 

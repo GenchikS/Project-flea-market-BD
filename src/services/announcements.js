@@ -1,3 +1,4 @@
+import createHttpError from "http-errors";
 import { AnnouncementsCollection } from "../db/models/announcement.js";
 import { UsersCollection } from "../db/models/user.js";
 import { calculatePagonationData } from "../utils/calculatePagonationData.js";
@@ -6,35 +7,41 @@ import { calculatePagonationData } from "../utils/calculatePagonationData.js";
 export const getAllAnnouncements = async (payload) => {
   const { chapter, category, purchaseSale } = payload;
   // console.log(`chapter`, chapter);
+  try {
+    const announcementsAll = await AnnouncementsCollection.find();
+    // console.log(`announcementsAll`, announcementsAll);
 
-  const announcementsAll = await AnnouncementsCollection.find();
-  // console.log(`announcementsAll`, announcementsAll);
+    const chapterFilter = announcementsAll.filter((announcement) =>
+      chapter ? announcement.chapter === chapter : true,
+    );
+    // console.log(`chapterFilter`, chapterFilter);
+    const categoryFilter = chapterFilter.filter((announcement) =>
+      category ? announcement.category === category : true,
+    );
+    // console.log(`categoryFilter`, categoryFilter);
+    const purchaseSaleFilter = categoryFilter.filter((announcement) =>
+      purchaseSale ? announcement.purchaseSale === purchaseSale : true,
+    );
+    // console.log(`purchaseSaleFilter`, purchaseSaleFilter);
 
-  const chapterFilter = announcementsAll.filter((announcement) =>
-    chapter ? announcement.chapter === chapter : true,
-  );
-  // console.log(`chapterFilter`, chapterFilter);
-  const categoryFilter = chapterFilter.filter((announcement) =>
-    category ? announcement.category === category : true,
-  );
-  // console.log(`categoryFilter`, categoryFilter);
-  const purchaseSaleFilter = categoryFilter.filter((announcement) =>
-    purchaseSale ? announcement.purchaseSale === purchaseSale : true,
-  );
-  // console.log(`purchaseSaleFilter`, purchaseSaleFilter);
-
-  return purchaseSaleFilter
+    return purchaseSaleFilter;
+  } catch (error) {
+    throw createHttpError(404, `Оголошеннь не знайдено!`);
+  }
 };
 
 
 export const getAllAnnouncementsPagination = async (payload, perPage, page) => {
   // console.log(`payload`, payload);
 
-  const limit = perPage;
-  const skip = (page - 1) * perPage;
-  // console.log(`skip`, skip);
+  // console.log(`perPage`, perPage);
+  // console.log(`page`, page);
 
-  const announcementData = payload.slice(skip, limit);
+  try {
+  const skip = Number((page - 1) * perPage);
+  const limit =  Number(perPage);
+
+  const announcementData = payload.slice(skip, skip + limit);
   // console.log(`announcementData`, announcementData);
 
   const announcementsCount = payload.length;
@@ -48,6 +55,9 @@ export const getAllAnnouncementsPagination = async (payload, perPage, page) => {
     data: announcementData,
     ...paginationData,
   };
+  } catch (error) {
+    throw createHttpError(404, `Оголошеннь не знайдено!`);
+  }
 };
 
 
@@ -57,17 +67,23 @@ export const getAllAnnouncementsPagination = async (payload, perPage, page) => {
 export const getAnnouncementById = async (payload) => {
   const { id } = payload;
   // console.log(`id services`, id);
-  const announcementById = await AnnouncementsCollection.findById(id);
-  if (announcementById) {
-    // console.log(`announcementById`, announcementById);
-    return announcementById;
-  }
-  if (!announcementById) {
-    // console.log(`id services 2`, id);
-    const announcementByIdUser = await AnnouncementsCollection.find({ idUser: id });
-    // console.log(`announcementByIdUser`, announcementByIdUser);
-    if (announcementByIdUser.length > 0) return announcementByIdUser;
-    return null;
+  try {
+    const announcementById = await AnnouncementsCollection.findById(id);
+    if (announcementById) {
+      // console.log(`announcementById`, announcementById);
+      return announcementById;
+    }
+    if (!announcementById) {
+      // console.log(`id services 2`, id);
+      const announcementByIdUser = await AnnouncementsCollection.find({
+        idUser: id,
+      });
+      return announcementByIdUser;
+    }
+  } catch (error) {
+    if (error) {
+      throw createHttpError(404, `Нажаль ваших оголошень не знайдено!`);
+    }
   }
 }
 
