@@ -24,7 +24,7 @@ export const getAnnouncementsControllers = async (req, res, next) => {
   );
     res.json({
       status: 200,
-      message: 'Знайдені оголошення:',
+      message: 'Знайдено оголошень:',
       data: paginationData,
     });
 };
@@ -46,7 +46,7 @@ export const getAnnouncementsIdControllers = async (req, res, next) => {
 
   res.json({
     status: 200,
-    message: 'Знайдені оголошення:',
+    message: 'Знайдено оголошень:',
     data: paginationData,
   });
 };
@@ -59,7 +59,7 @@ export const createAnnouncementControllers = async (req, res, next) => {
   }
     res.status(201).json({
       status: 201,
-      message: 'Оголошення створено',
+      message: 'Оголошення створено!',
       data: response,
     });
 };
@@ -79,7 +79,7 @@ export const patchUpdateControllers = async (req, res, next) => {
 
   res.status(201).json({
     status: 201,
-    message: `Successfully patched a user!`,
+    message: 'Оголошення оновлено!',
     data: patchAnnouncement,
   });
 };
