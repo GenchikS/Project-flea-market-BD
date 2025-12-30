@@ -33,7 +33,6 @@ export const getAllAnnouncements = async (payload) => {
 
 export const getAllAnnouncementsPagination = async (payload, perPage, page) => {
   // console.log(`payload`, payload);
-
   // console.log(`perPage`, perPage);
   // console.log(`page`, page);
 
