@@ -13,8 +13,8 @@ export const getAnnouncementsControllers = async (req, res, next) => {
   // const source = req.query;
   // console.log(`source`, source);
   let { perPage, page } = req.query;
-  perPage = perPage ?? 4;
-  page = page ?? 1;
+  perPage = perPage ?? "6";
+  page = page ?? "1";
   const announcementsAll = await getAllAnnouncements(req.query);
   // console.log('announcementsAll', announcementsAll);
   const paginationData = await getAllAnnouncementsPagination(
@@ -31,23 +31,21 @@ export const getAnnouncementsControllers = async (req, res, next) => {
 
 export const getAnnouncementsIdControllers = async (req, res, next) => {
   // console.log(`req.params`, req.params);
-  // const {id} = req.paramas;
-  // console.log(`id`, id);
-    // let { perPage, page } = req.query;
-    // perPage = perPage ?? 4;
-    // page = page ?? 1;
+    let { perPage, page } = req.query;
+    perPage = perPage ?? "6";
+    page = page ?? "1";
   const announcementsAll = await getAnnouncementById(req.params);
   // console.log('getAnnouncementsControllers', announcementsAll);
-  // const paginationData = await getAllAnnouncementsPagination(
-  //   announcementsAll,
-  //   perPage,
-  //   page,
-  // );
+  const paginationData = await getAllAnnouncementsPagination(
+    announcementsAll,
+    perPage,
+    page,
+  );
 
   res.json({
     status: 200,
     message: 'Знайдено оголошень:',
-    data: announcementsAll,
+    data: paginationData,
   });
 };
 

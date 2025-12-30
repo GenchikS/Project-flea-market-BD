@@ -32,16 +32,20 @@ export const getAllAnnouncements = async (payload) => {
 
 
 export const getAllAnnouncementsPagination = async (payload, perPage, page) => {
-  // console.log(`payload`, payload);
+  console.log(`payload`, payload);
   // console.log(`perPage`, perPage);
   // console.log(`page`, page);
 
   try {
   const skip = Number((page - 1) * perPage);
-  const limit =  Number(perPage);
+    const limit = Number(perPage);
+
+    console.log(`skip`, skip);
+    console.log(`limit`, limit);
+
 
   const announcementData = payload.slice(skip, skip + limit);
-  // console.log(`announcementData`, announcementData);
+  console.log(`announcementData`, announcementData);
 
   const announcementsCount = payload.length;
   const paginationData = calculatePagonationData(
@@ -60,17 +64,14 @@ export const getAllAnnouncementsPagination = async (payload, perPage, page) => {
 };
 
 
-
-
-
 export const getAnnouncementById = async (payload) => {
   const { id } = payload;
   // console.log(`id services`, id);
   try {
-    const announcementById = await AnnouncementsCollection.findById(id);
+    const announcementById = await AnnouncementsCollection.findById({_id: id});
     if (announcementById) {
       // console.log(`announcementById`, announcementById);
-      return announcementById;
+      return [announcementById];
     }
     if (!announcementById) {
       // console.log(`id services 2`, id);
