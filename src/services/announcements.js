@@ -90,16 +90,22 @@ export const getAnnouncementById = async (payload) => {
 
 export const postCreateAnnouncement = async (payload) => {
   const { idUser } = payload;
-  // const announcementByIdUser = await AnnouncementsCollection.find({ idUser: idUser });
+
+  try {
   const announcementByIdUser = await UsersCollection.findById(idUser);
   // console.log(`announcementByIdUser`, announcementByIdUser);
   if (announcementByIdUser) {
-  const announcement = await AnnouncementsCollection.create(payload);
-  // console.log(`payload post`, payload);
-  return announcement;
+    const announcement = await AnnouncementsCollection.create(payload);
+    // console.log(`payload post`, payload);
+    return announcement;
   }
-  if(!announcementByIdUser) return null
-// return null
+  } catch (error) {
+      throw createHttpError(404, `Користувача з данним id не знайдено!`);
+  }
+
+
+
+
 }
 
 export const patchAnnouncementId = async (idAnnoun, payload) => {
