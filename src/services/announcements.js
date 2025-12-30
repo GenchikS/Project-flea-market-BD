@@ -90,15 +90,19 @@ export const getAnnouncementById = async (payload) => {
 
 export const postCreateAnnouncement = async (payload) => {
   const { idUser } = payload;
+  console.log(`idUser`, idUser);
 
   try {
-  const announcementByIdUser = await UsersCollection.findById(idUser);
-  // console.log(`announcementByIdUser`, announcementByIdUser);
+  const announcementByIdUser = await UsersCollection.findById({_id:idUser});
+  console.log(`announcementByIdUser`, announcementByIdUser);
   if (announcementByIdUser) {
     const announcement = await AnnouncementsCollection.create(payload);
     // console.log(`payload post`, payload);
     return announcement;
   }
+    if (!announcementByIdUser) {
+      throw createHttpError(404, `Користувача з данним id не знайдено!`);;
+    }
   } catch (error) {
       throw createHttpError(404, `Користувача з данним id не знайдено!`);
   }
