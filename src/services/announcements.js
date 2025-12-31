@@ -130,8 +130,11 @@ export const patchAnnouncementId = async (idAnnoun, payload) => {
 
 export const deleteAnnouncementId = async (announId) => {
     const id = announId;
-    // console.log(`id deleteAnnonucementId`, id);
+  // console.log(`id deleteAnnonucementId`, id);
+  try {
   const announcement = await AnnouncementsCollection.findByIdAndDelete(id);
-  if(announcement) return announcement;
-  if (!announcement) return null;
+  if (announcement) return announcement;
+  } catch (error) {
+    throw createHttpError(404, `Оголошення з данним id не знайдено!`);
+  }
 };
