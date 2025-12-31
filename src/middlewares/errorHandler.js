@@ -16,7 +16,7 @@ export const errorHandler = (err, req, res, next) => {
   }
 
   res.status(500).json({
-    message: `Something went wrong`,
+    message: `Щось пішло не так, спробуй ще раз!`,
     error: err.message,
   });
 };
